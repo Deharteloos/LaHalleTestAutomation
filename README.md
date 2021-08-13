@@ -20,5 +20,5 @@ See deployment for notes on how to deploy the project on a live system.
 * Clone the project
 
 ```  
-git clone   
+git clone https://github.com/Deharteloos/LaHalleTestAutomation.git  
 ```
