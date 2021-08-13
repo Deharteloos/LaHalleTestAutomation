@@ -2,6 +2,7 @@ package pageObjects;
 
 import config.Configuration;
 import config.Properties;
+import context.ScenarioContext;
 import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import org.apache.logging.log4j.LogManager;
@@ -9,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.ByteArrayInputStream;
@@ -16,6 +18,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.time.Duration;
+import java.util.Optional;
 import java.util.function.Function;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
@@ -24,6 +27,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 public class Page {
 
 
+    protected ScenarioContext context = new ScenarioContext();
     private static final Logger LOG = LogManager.getLogger(Page.class);
 
     protected WebDriver driver;
@@ -162,6 +166,31 @@ public class Page {
 
     protected void scrollDownToElement(WebElement element) {
         js.executeScript("arguments[0].scrollIntoView(true);arguments[0].scrollTop=arguments[0].scrollHeight", element);
+    }
+
+    /**
+     * Checks whether the cookies dialog box is shown and accepts the cookies
+     * @param byDialogBox
+     * @param byAcceptBtn
+     */
+    public void acceptsCookies(By byDialogBox, By byAcceptBtn) {
+        if(!shortUntil(ExpectedConditions.visibilityOfElementLocated(byDialogBox))) {
+            LOG.warn("The cookies dialog box was not shown.");
+        } else {
+            WebElement acceptCookieBtn = driver.findElement(byAcceptBtn);
+            if(acceptCookieBtn != null) {
+                acceptCookieBtn.click();
+                LOG.info("Cookies accepted");
+            } else {
+                LOG.warn("Button for cookies acceptance not found.");
+            }
+        }
+    }
+
+    public void sendKeysSlowly(WebElement webElement, String key) {
+        for (int i = 0; i < key.length(); i++) {
+            webElement.sendKeys(key.substring(i, i + 1));
+        }
     }
 
 }
