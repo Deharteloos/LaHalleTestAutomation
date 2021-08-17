@@ -11,8 +11,6 @@ public class HomePage extends Page {
     private static final Logger LOG = LogManager.getLogger(HomePage.class);
 
     //Page elements declaration
-    //@FindBy(id = "popin_tc_privacy")
-    //@FindBy(id = "popin_tc_privacy_button_2")
     @FindBy(css = "#navigation > div.wrapper-header-menu > div.wrapper-header-search > div")
     private WebElement searchButton;
 
@@ -22,14 +20,14 @@ public class HomePage extends Page {
     @FindBy(id = "q")
     private WebElement searchInput;
 
-    @FindBy(css = "#search-suggestions > div > div.phrase-suggestions")
+    @FindBy(css = "#search-suggestions > div > div.phrase-suggestions > div.hitgroup")
     private WebElement collections;
 
-    @FindBy(css = "#search-suggestions > div > div.phrase-suggestions > div > ul > li:nth-child(1)")
+    @FindBy(css = "#search-suggestions > div > div.phrase-suggestions > div > ul > li:first-child")
     private WebElement firstCollectionSuggestion;
 
-    protected void setCollectionSelected() {
-        context.set("COLLECTION_SELECTED", this.firstCollectionSuggestion.getText());
+    public void navigateToEnv() {
+        get(config.getEnvironment());
     }
 
     public void openSearchForm() {
@@ -45,14 +43,16 @@ public class HomePage extends Page {
         sendKeysSlowly(this.searchInput, text);
     }
 
-    public void clickOnCollection() {
+    public String clickOnCollection() {
+        String selected = null;
         if(!shortUntil(ExpectedConditions.visibilityOf(this.collections)))
             LOG.warn("There was no suggestion of collections");
         else {
             wait.until(ExpectedConditions.elementToBeClickable(this.firstCollectionSuggestion));
+            selected = new String(this.firstCollectionSuggestion.getText());
             this.firstCollectionSuggestion.click();
-            this.setCollectionSelected();
         }
+        return selected;
     }
 
 

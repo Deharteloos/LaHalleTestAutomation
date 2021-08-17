@@ -6,7 +6,7 @@ Feature: Search features
 
   @bug_1123
   Scenario Outline: Some articles in search results not visible
-    When I type a <text>
+    When I type "<text>" in the search input
     And I click on the first element in the collection list
     Then The results are displayed
     And Some items are missing
@@ -14,3 +14,4 @@ Feature: Search features
     Examples:
       |text     |
       |collants |
+      |creeks   |

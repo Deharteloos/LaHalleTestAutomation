@@ -7,8 +7,6 @@ import java.util.List;
 
 public class ArticlesPage extends Page {
 
-    private final String COLLECTION_SELECTED = context.get("COLLECTION_SELECTED");
-
     //Page elements declaration
     @FindBy(css = "#main > div.product-search-header > div.breadcrumb-container.breadcrumb-top > div > ul > li:last-child")
     private WebElement lastNavigationListItem;
@@ -25,11 +23,11 @@ public class ArticlesPage extends Page {
     public boolean thereAreNoShownArticles() {
         waitForLoadingPage();
         return this.notShownArticles.size() != 0
-                || this.shownArticles.size() == Integer.parseInt(this.numberOfArticlesThatShouldBeShown.getText());
+                && this.shownArticles.size() != Integer.parseInt(this.numberOfArticlesThatShouldBeShown.getText());
     }
 
-    public boolean isTheRightPage() {
-        return this.lastNavigationListItem.getText().equals(COLLECTION_SELECTED);
+    public boolean isTheRightPage(String collectionSelected) {
+        return this.lastNavigationListItem.getText().equals(collectionSelected);
     }
 
 }
