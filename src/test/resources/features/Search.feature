@@ -4,7 +4,7 @@ Feature: Search features
     Given I am on the home page
     And I click on the search button
 
-  @bug_1123
+  @Bug_1123
   Scenario Outline: Some articles in search results not visible
     When I type "<text>" in the search input
     And I click on the first element in the collection list

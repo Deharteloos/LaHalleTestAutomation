@@ -1,6 +1,6 @@
 Feature: Account management features
 
-  @bug_1264
+  @Bug_1264 @connect
   Scenario: Change email with a wrong one
     Given I am on the home page
     When I click on the connection button
