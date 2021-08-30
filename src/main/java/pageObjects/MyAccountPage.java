@@ -4,13 +4,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class MyAccountPage extends Page {
 
     private static final Logger LOG = LogManager.getLogger(MyAccountPage.class);
 
-    //page elements declaration
+    /**
+     * FindBy
+     */
     @FindBy(css = "#main > div.account-banner > h2")
     private WebElement pageTitle;
 
@@ -35,7 +38,7 @@ public class MyAccountPage extends Page {
     }
 
     public boolean acceptsEmail(String msg) {
-        if(!waitUntil(ExpectedConditions.visibilityOf(this.emailErrorMessage)))
+        if(!waitUntil(visibilityOf(this.emailErrorMessage)))
             return true;
         else {
             if(!this.emailErrorMessage.getText().equals(msg))

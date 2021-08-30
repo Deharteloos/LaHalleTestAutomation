@@ -7,7 +7,9 @@ import java.util.List;
 
 public class ArticlesPage extends Page {
 
-    //Page elements declaration
+    /**
+     * FindBy
+     */
     @FindBy(css = "#main > div.product-search-header > div.breadcrumb-container.breadcrumb-top > div > ul > li:last-child")
     private WebElement lastNavigationListItem;
 

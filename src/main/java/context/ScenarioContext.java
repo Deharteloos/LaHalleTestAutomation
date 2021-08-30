@@ -1,5 +1,7 @@
 package context;
 
+import enums.Context;
+
 import java.util.HashMap;
 
 public class ScenarioContext {
@@ -8,12 +10,12 @@ public class ScenarioContext {
 
     private final HashMap<String, Object> buffer = new HashMap<>();
 
-    public void set( String key, Object value ){
-        this.buffer.put(key, value);
+    public void set(Context key, Object value ){
+        this.buffer.put(key.toString(), value);
     }
 
-    public <R> R get( String key ){
-        return (R) this.buffer.get(key);
+    public <R> R get( Context key ){
+        return (R) this.buffer.get(key.toString());
     }
 
     public static ScenarioContext getINSTANCE() {

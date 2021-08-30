@@ -20,8 +20,13 @@ public class HomePageSteps {
 
     /* ====== Page objects declaration ====== */
     HomePage homePage;
-
     ScenarioContext context;
+
+    /**
+     * Static selectors
+     */
+    private static final By cookiesDialogBoxId = By.id("popin_tc_privacy");
+    private static final By cookiesAcceptBtnId = By.id("popin_tc_privacy_button_2");
 
     public HomePageSteps(ScenarioContext context, HomePage homePage) {
         this.context = context;
@@ -32,7 +37,7 @@ public class HomePageSteps {
     @Given("I am on the home page")
     public void iAmOnTheHomePage() {
         homePage.navigateToEnv();
-        homePage.acceptsCookies(By.id("popin_tc_privacy"), By.id("popin_tc_privacy_button_2"));
+        homePage.acceptsCookies(cookiesDialogBoxId, cookiesAcceptBtnId);
     }
 
     @And("I click on the search button")
@@ -47,7 +52,7 @@ public class HomePageSteps {
 
     @And("I click on the first element in the collection list")
     public void iClickOnTheFirstElementInTheCollectionList() {
-        context.set(Context.COLLECTION_SELECTED.toString(), homePage.clickOnCollection());
+        context.set(Context.COLLECTION_SELECTED, homePage.clickOnCollection());
     }
 
     @When("I click on the connection button")

@@ -122,14 +122,11 @@ public class Page {
     }
 
     protected void clickOn(WebElement element){
-
         if( !shortUntil(visibilityOf(element)) ){
-            // Logger
             LOG.warn("Element not visible after click");
         }
 
         if( !shortUntil(elementToBeClickable(element))){
-            // Logger
             LOG.warn("Element not clickable");
         }
         element.click();

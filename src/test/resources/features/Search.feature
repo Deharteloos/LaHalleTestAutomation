@@ -13,5 +13,5 @@ Feature: Search features
 
     Examples:
       |text     |
-      |collants |
-      |creeks   |
+      | collants |
+      | creeks   |

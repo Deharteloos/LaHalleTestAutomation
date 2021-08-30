@@ -5,13 +5,16 @@ import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.*;
 
 public class HomePage extends Page {
 
     private static final Logger LOG = LogManager.getLogger(HomePage.class);
 
-    //Page elements declaration
+    /**
+     * FindBy
+     */
     @FindBy(css = "#navigation > div.wrapper-header-menu > div.wrapper-header-search > div")
     private WebElement searchButton;
 
@@ -51,14 +54,19 @@ public class HomePage extends Page {
     @FindBy(linkText = "Mes informations")
     private WebElement accountInformationLink;
 
+    /**
+     * Static selectors
+     */
+    private static final String deconnectionBtnCssSelector = ".user-logout.buttonstyle";
+
     public void navigateToEnv() {
         get(config.getEnvironment());
     }
 
     public void openSearchForm() {
-        wait.until(ExpectedConditions.elementToBeClickable(this.searchButton));
-        this.searchButton.click();
-        if(waitUntil(ExpectedConditions.visibilityOf(this.searchForm)))
+        wait.until(elementToBeClickable(this.searchButton));
+        clickOn(this.searchButton);
+        if(waitUntil(visibilityOf(this.searchForm)))
             LOG.info("Search form opened.");
         else
             LOG.warn("Search form not opened.");
@@ -70,20 +78,20 @@ public class HomePage extends Page {
 
     public String clickOnCollection() {
         String selected = null;
-        if(!shortUntil(ExpectedConditions.visibilityOf(this.collections)))
+        if(!shortUntil(visibilityOf(this.collections)))
             LOG.warn("There was no suggestion of collections");
         else {
-            wait.until(ExpectedConditions.elementToBeClickable(this.firstCollectionSuggestion));
+            wait.until(elementToBeClickable(this.firstCollectionSuggestion));
             selected = this.firstCollectionSuggestion.getText();
-            this.firstCollectionSuggestion.click();
+            clickOn(this.firstCollectionSuggestion);
         }
         return selected;
     }
 
     public void openConnectionPanel() {
-        wait.until(ExpectedConditions.elementToBeClickable(this.connectionButton));
-        this.connectionButton.click();
-        if(waitUntil(ExpectedConditions.visibilityOf(this.connectionPanel)))
+        wait.until(elementToBeClickable(this.connectionButton));
+        clickOn(this.connectionButton);
+        if(waitUntil(visibilityOf(this.connectionPanel)))
             LOG.info("Connection panel opened.");
         else
             LOG.warn("Connection panel not opened.");
@@ -94,7 +102,7 @@ public class HomePage extends Page {
     }
 
     public void writePassword(String password) {
-        if(!shortUntil(ExpectedConditions.visibilityOf(this.passwordInput)))
+        if(!shortUntil(visibilityOf(this.passwordInput)))
             LOG.warn("Password input not shown. Either the email is incorrect or the account does not exists.");
         else {
             sendKeysSlowly(this.passwordInput, password);
@@ -102,25 +110,25 @@ public class HomePage extends Page {
     }
 
     public void login() {
-        this.loginValidationButton.click();
+        clickOn(this.loginValidationButton);
         waitForLoadingPage();
     }
 
     public boolean isAuthenticated() {
-        return shortUntil(ExpectedConditions.presenceOfElementLocated(By.cssSelector(".user-logout.buttonstyle")));
+        return shortUntil(presenceOfElementLocated(By.cssSelector(deconnectionBtnCssSelector)));
     }
 
     public void goToAccountInformation() {
         waitForLoadingPage();
-        if(middleUntil(ExpectedConditions.elementToBeClickable(accountButton)))
+        if(middleUntil(elementToBeClickable(accountButton)))
             action.moveToElement(accountButton).perform();
         else {
             LOG.warn("Account button not interactive");
         }
-        if(shortUntil(ExpectedConditions.visibilityOf(userPanel))) {
+        if(shortUntil(visibilityOf(userPanel))) {
             LOG.info("User panel opened.");
-            wait.until(ExpectedConditions.elementToBeClickable(accountInformationLink));
-            accountInformationLink.click();
+            wait.until(elementToBeClickable(accountInformationLink));
+            clickOn(accountInformationLink);
             waitForLoadingPage();
         } else {
             LOG.warn("User panel not opened.");
@@ -128,15 +136,15 @@ public class HomePage extends Page {
     }
 
     public void deconnection() {
-        if(middleUntil(ExpectedConditions.elementToBeClickable(accountButton)))
+        if(middleUntil(elementToBeClickable(accountButton)))
             action.moveToElement(accountButton).perform();
         else {
             LOG.warn("Account button not interactive");
         }
-        if(shortUntil(ExpectedConditions.visibilityOf(userPanel))) {
+        if(shortUntil(visibilityOf(userPanel))) {
             LOG.info("User panel opened.");
-            wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector("ul.user-links > li > a.user-logout.buttonstyle")));
-            driver.findElement(By.cssSelector("ul.user-links > li > a.user-logout.buttonstyle")).click();
+            wait.until(elementToBeClickable(By.cssSelector(deconnectionBtnCssSelector)));
+            clickOn(driver.findElement(By.cssSelector(deconnectionBtnCssSelector)));
             waitForLoadingPage();
         } else {
             LOG.warn("User panel not opened.");

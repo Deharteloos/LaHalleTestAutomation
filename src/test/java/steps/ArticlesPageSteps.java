@@ -13,7 +13,6 @@ public class ArticlesPageSteps {
 
     /* ====== Page objects declaration ====== */
     ArticlesPage articlesPage;
-
     ScenarioContext context;
 
     public ArticlesPageSteps(ScenarioContext context, ArticlesPage articlesPage) {
@@ -24,7 +23,7 @@ public class ArticlesPageSteps {
     /* ====== Steps definitions ====== */
     @Then("The results are displayed")
     public void theResultsAreDisplayed() {
-        assertTrue(articlesPage.isTheRightPage(context.get(Context.COLLECTION_SELECTED.toString())), "The results page shown is not the one expected.");
+        assertTrue(articlesPage.isTheRightPage(context.get(Context.COLLECTION_SELECTED)), "The results page shown is not the one expected.");
     }
 
     @And("Some items are missing")

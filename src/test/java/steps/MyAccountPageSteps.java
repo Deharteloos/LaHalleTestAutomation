@@ -19,7 +19,6 @@ public class MyAccountPageSteps {
 
     /* ====== Page objects declaration ====== */
     MyAccountPage myAccountPage;
-
     ScenarioContext context;
 
     public MyAccountPageSteps(ScenarioContext context, MyAccountPage myAccountPage) {
