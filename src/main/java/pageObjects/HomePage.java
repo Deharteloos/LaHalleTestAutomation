@@ -111,15 +111,14 @@ public class HomePage extends Page {
 
     public void login() {
         clickOn(this.loginValidationButton);
-        waitForLoadingPage();
     }
 
     public boolean isAuthenticated() {
         return shortUntil(presenceOfElementLocated(By.cssSelector(deconnectionBtnCssSelector)));
     }
 
-    public void goToAccountInformation() {
-        waitForLoadingPage();
+    public void goToAccountInformation() throws InterruptedException {
+        Thread.sleep(5000);
         if(middleUntil(elementToBeClickable(accountButton)))
             action.moveToElement(accountButton).perform();
         else {

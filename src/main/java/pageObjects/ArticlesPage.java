@@ -24,6 +24,9 @@ public class ArticlesPage extends Page {
 
     public boolean thereAreNoShownArticles() {
         waitForLoadingPage();
+        if(notShownArticles.size() != 0)
+            scrollToElement(notShownArticles.get(0));
+        saveScreenShotPNG();
         return this.notShownArticles.size() != 0
                 && this.shownArticles.size() != Integer.parseInt(this.numberOfArticlesThatShouldBeShown.getText());
     }

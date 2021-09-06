@@ -74,7 +74,7 @@ public class HomePageSteps {
     }
 
     @And("I click on my informations")
-    public void iClickOnMyInformations() {
+    public void iClickOnMyInformations() throws InterruptedException {
         assertTrue(homePage.isAuthenticated(), "The authentication failed.");
         homePage.goToAccountInformation();
     }

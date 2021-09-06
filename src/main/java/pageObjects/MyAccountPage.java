@@ -38,11 +38,14 @@ public class MyAccountPage extends Page {
     }
 
     public boolean acceptsEmail(String msg) {
-        if(!waitUntil(visibilityOf(this.emailErrorMessage)))
+        if(!waitUntil(visibilityOf(this.emailErrorMessage))) {
+            saveScreenShotPNG();
             return true;
+        }
         else {
             if(!this.emailErrorMessage.getText().equals(msg))
                 LOG.warn("The error message is not the one expected");
+            saveScreenShotPNG();
             return false;
         }
     }

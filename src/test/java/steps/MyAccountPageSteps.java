@@ -44,10 +44,5 @@ public class MyAccountPageSteps {
         assertFalse(myAccountPage.acceptsEmail(errorMsg), "No error message. The email was accepted.");
     }
 
-    @But("No error message is shown")
-    public void noErrorMessageIsShown() {
-        assertTrue(myAccountPage.acceptsEmail(null), "There was an error message on the email.");
-    }
-
 
 }

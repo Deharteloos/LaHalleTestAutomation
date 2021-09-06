@@ -8,4 +8,3 @@ Feature: Account management features
     And I click on my informations
     And I write a the new wrong email from "new_data"
     Then I should get the error message "L'e-mail renseigné est incorrect"
-    But No error message is shown
