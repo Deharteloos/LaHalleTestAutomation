@@ -11,8 +11,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <aspectjVersion>1.9.2</aspectjVersion>
-        <aspectj.version>1.8.10</aspectj.version>
+        <aspectjVersion>1.9.6</aspectjVersion>
 
         <mavenCompilerVersion>3.8.1</mavenCompilerVersion>
         <javaVersion>1.8</javaVersion>
@@ -117,6 +116,19 @@
             <version>${allureVersion}</version>
         </dependency>
 
+        <!-- Variabilization -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -144,7 +156,7 @@
 
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
-                <version>2.6</version>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
                         <id>copy-allure-environment</id>
@@ -157,12 +169,33 @@
                             <resources>
                                 <resource>
                                     <directory>${basedir}/target/classes</directory>
-                                    <includes>environment.properties</includes>
+                                    <includes>config/config.properties</includes>
+                                    <filtering>true</filtering>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M5</version>
+                <configuration>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <shutdown>kill</shutdown>
+                    <argLine>
+                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectjVersion}/aspectjweaver-${aspectjVersion}.jar"
+                    </argLine>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.aspectj</groupId>
+                        <artifactId>aspectjweaver</artifactId>
+                        <version>${aspectjVersion}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
 
         </plugins>
